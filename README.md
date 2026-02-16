@@ -2,8 +2,6 @@
 
 A **backend-only** showcase of how to use [LangChain](https://python.langchain.com/) to enable RAG: automated **fetch → parse → chunk → embed → store** into Postgres (pgvector), with a **RAG agent** you can use via **CLI** or **LangGraph Studio**.
 
-Built for engineers and hiring managers: production-style patterns (config-driven N doc sources, K8s CronJob, Docker, MicroK8s) without a frontend.
-
 **License:** [MIT](LICENSE).
 
 ---
@@ -300,12 +298,6 @@ Use `microk8s kubectl apply -f k8s/` (or alias `kubectl` to `microk8s kubectl`).
   ```
   Ensure `.env` is not committed (it’s in `.gitignore`). After pushing, add the description and topics in the repo settings.
 - **To put a live demo on the web:** Add a minimal UI (e.g. Streamlit or a small Next.js page) that calls your RAG API, and deploy the stack (e.g. Fly.io, Railway, or Render) so visitors can try it without running Docker locally.
-
----
-
-## Audience & purpose
-
-This repo is for **engineers** and **hiring managers**: a clear, runnable example of LangChain-based RAG with production-style plumbing (config-driven sources, CronJob, vector DB). No UI—focus on backend patterns and on interacting via CLI or LangGraph Studio.
 
 ---
 
