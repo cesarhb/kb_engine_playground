@@ -1,0 +1,33 @@
+# ConfigMap for doc_sources.yaml (cloud architecture: PDFs + GitHub).
+# Keep in sync with config/doc_sources.yaml.
+# For github_repo sources, set GITHUB_PERSONAL_ACCESS_TOKEN in the CronJob secret.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kb-engine-doc-sources
+  labels:
+    app: kb-engine-playground
+data:
+  doc_sources.yaml: |
+    sources:
+      - id: aws_overview
+        type: pdf_url
+        url: "https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf"
+      - id: aws_well_architected
+        type: pdf_url
+        url: "https://docs.aws.amazon.com/pdfs/wellarchitected/latest/framework/wellarchitected-framework.pdf"
+      - id: aws_security_best_practices
+        type: pdf_url
+        url: "https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-security-best-practices/aws-security-best-practices.pdf"
+      - id: gcp_python_docs_samples
+        type: github_repo
+        repo: "GoogleCloudPlatform/python-docs-samples"
+        branch: "main"
+        include_paths:
+          - "README"
+          - "docs/"
+          - "getting_started/"
+        file_extensions:
+          - ".md"
+          - ".rst"
+          - ".txt"

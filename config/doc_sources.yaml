@@ -1,0 +1,38 @@
+# Doc sources: Cloud architecture — easy-to-ingest PDFs + GitHub.
+# PDFs are reliable (no JS); GitHub gives code samples and READMEs.
+# Set GITHUB_PERSONAL_ACCESS_TOKEN in .env for GitHub (higher rate limits).
+
+sources:
+  # --- AWS (official PDF whitepapers — stable, full-text) ---
+  - id: aws_overview
+    type: pdf_url
+    url: "https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf"
+
+  - id: aws_well_architected
+    type: pdf_url
+    url: "https://docs.aws.amazon.com/pdfs/wellarchitected/latest/framework/wellarchitected-framework.pdf"
+
+  - id: aws_security_best_practices
+    type: pdf_url
+    url: "https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-security-best-practices/aws-security-best-practices.pdf"
+
+  # --- Google Cloud (GitHub: docs and READMEs only) ---
+  - id: gcp_python_docs_samples
+    type: github_repo
+    repo: "GoogleCloudPlatform/python-docs-samples"
+    branch: "main"
+    include_paths:
+      - "README"
+      - "docs/"
+      - "getting_started/"
+    file_extensions:
+      - ".md"
+      - ".rst"
+      - ".txt"
+
+  # Optional: more GCP repos (uncomment and set GITHUB_PERSONAL_ACCESS_TOKEN)
+  # - id: gcp_devrel_demos
+  #   type: github_repo
+  #   repo: "GoogleCloudPlatform/devrel-demos"
+  #   branch: "main"
+  #   include_paths: ["README", "docs/"]

@@ -1,0 +1,33 @@
+# LangChain
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-core>=0.3.0
+langchain-text-splitters>=0.3.0
+
+# Document loaders (web, PDF, GitHub)
+langchain-community[web-base]
+pypdf>=4.0.0
+
+# Vector store: pgvector
+pgvector>=0.2.0
+
+# DB and async
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+
+# Embeddings
+langchain-openai>=0.2.0
+langchain-ollama>=0.2.0
+
+# Optional: LangGraph for agent graph and Studio
+langgraph>=0.2.0
+# Optional: run "langgraph dev" for LangGraph Studio UI (pip install "langgraph-cli[inmem]")
+# langgraph-cli[inmem]>=0.1.55
+
+# Server for LangGraph Studio / API
+uvicorn[standard]>=0.30.0
+fastapi>=0.115.0
+
+# Config and env
+pyyaml>=6.0
+python-dotenv>=1.0.0

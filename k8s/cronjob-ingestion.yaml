@@ -1,0 +1,61 @@
+# CronJob: run ingestion on a schedule (e.g. daily).
+# Requires: Postgres (with pgvector) reachable at DATABASE_URL,
+# and an image that runs the ingestion pipeline.
+# Usage: kubectl apply -f k8s/
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kb-engine-ingestion
+  labels:
+    app: kb-engine-playground
+spec:
+  schedule: "0 2 * * *"   # 02:00 daily (adjust as needed)
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            app: kb-engine-playground
+            job: ingestion
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: ingestion
+              # Replace with your image (e.g. from ECR or local registry)
+              image: kb-engine-playground:latest
+              imagePullPolicy: IfNotPresent
+              command:
+                - python
+                - -m
+                - src.ingestion.pipeline
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: kb-engine-secrets
+                      key: database-url
+                - name: EMBEDDING_PROVIDER
+                  value: "ollama"
+                - name: EMBEDDING_MODEL
+                  value: "nomic-embed-text"
+                - name: OLLAMA_BASE_URL
+                  value: "http://ollama-service:11434"   # if Ollama runs in cluster
+                # Optional: for github_repo doc sources (uncomment and add key to Secret)
+                # - name: GITHUB_PERSONAL_ACCESS_TOKEN
+                #   valueFrom:
+                #     secretKeyRef:
+                #       name: kb-engine-secrets
+                #       key: github-personal-access-token
+              volumeMounts:
+                - name: doc-sources
+                  mountPath: /app/config
+                  readOnly: true
+          volumes:
+            - name: doc-sources
+              configMap:
+                name: kb-engine-doc-sources

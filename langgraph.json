@@ -1,0 +1,6 @@
+{
+  "graphs": {
+    "rag_agent": "./src/agent/graph.py:graph"
+  },
+  "env": "./.env"
+}
